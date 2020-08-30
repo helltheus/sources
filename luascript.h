@@ -752,6 +752,12 @@ class LuaInterface
 		static int32_t luaStdSHA256(lua_State* L);
 		static int32_t luaStdSHA512(lua_State* L);
 		static int32_t luaStdCheckName(lua_State* L);
+		
+			//getPlayerFightMode(cid)
+        static int32_t luaGetPlayerFightMode(lua_State* L);
+ 
+        //getPlayerSecureMode(cid)
+        static int32_t luaGetPlayerSecureMode(lua_State* L);
 
 		lua_State* m_luaState;
 		bool m_errors;

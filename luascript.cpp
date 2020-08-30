@@ -2550,6 +2550,12 @@ void LuaInterface::registerFunctions()
 	//errors(var)
 	lua_register(m_luaState, "errors", LuaInterface::luaL_errors);
 
+	//getPlayerSecureMode
+	lua_register(m_luaState, "getPlayerSecureMode", LuaInterface::luaGetPlayerSecureMode);
+
+	//getPlayerFightMode
+	lua_register(m_luaState, "getPlayerFightMode", LuaInterface::luaGetPlayerFightMode);
+
 	//os table
 	luaL_register(m_luaState, "os", LuaInterface::luaSystemTable);
 
@@ -10806,6 +10812,38 @@ int32_t LuaInterface::luaDoAddIpBanishment(lua_State* L)
 	return 1;
 }
 
+int32_t LuaInterface::luaGetPlayerSecureMode(lua_State* L)
+{
+	//getPlayerSecureMode(cid)
+	ScriptEnviroment* env = getEnv();
+	Player* player = env->getPlayerByUID((uint32_t)popNumber(L));
+	if (!player)
+	{
+		errorEx(getError(LUA_ERROR_PLAYER_NOT_FOUND));
+		lua_pushboolean(L, false);
+	}
+	else
+		lua_pushnumber(L, player->getSecureMode());
+
+	return 1;
+}
+
+int32_t LuaInterface::luaGetPlayerFightMode(lua_State* L)
+{
+	//getPlayerFightMode(cid)
+	ScriptEnviroment* env = getEnv();
+	Player* player = env->getPlayerByUID((uint32_t)popNumber(L));
+	if (!player)
+	{
+		errorEx(getError(LUA_ERROR_PLAYER_NOT_FOUND));
+		lua_pushboolean(L, false);
+	}
+	else
+		lua_pushnumber(L, player->getAttackFactor());
+
+	return 1;
+}
+
 int32_t LuaInterface::luaDoAddPlayerBanishment(lua_State* L)
 {
 	//doAddPlayerBanishment(name/guid[, type[, length[, reason[, action[, comment[, admin[, statement]]]]]]])
@@ -11580,7 +11618,6 @@ int32_t LuaInterface::luaBitUNot(lua_State* L)
 	lua_pushnumber(L, ~number);
 	return 1;
 }
-
 #define MULTI_OPERATOR(type, name, op)\
 	int32_t LuaInterface::luaBit##name(lua_State* L)\
 	{\
@@ -11592,6 +11629,9 @@ int32_t LuaInterface::luaBitUNot(lua_State* L)
 		lua_pushnumber(L, value);\
 		return 1;\
 	}
+	
+	
+	
 
 MULTI_OPERATOR(int32_t, And, &=)
 MULTI_OPERATOR(int32_t, Or, |=)
