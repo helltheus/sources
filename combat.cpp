@@ -559,10 +559,10 @@ bool Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 	if (caster && caster->getCreature())
 	{
 		std::string value;
-		caster->getStorage("170298", value);
+		caster->getStorage("170301", value);
 		int32_t plus = (int32_t)(atoi(value.c_str()));
 		if (plus > 0 && params.combatType != COMBAT_HEALING)
-			change = (int32_t)std::ceil(change * (1 + plus * 0.15));
+			change = (int32_t)std::ceil(change * (1 + plus * 0.1));
 	}
 
 
@@ -612,10 +612,10 @@ bool Combat::CombatManaFunc(Creature* caster, Creature* target, const CombatPara
 	if (caster && caster->getCreature())
 	{
 		std::string value;
-		caster->getStorage("170298", value);
+		caster->getStorage("170301", value);
 		int32_t plus = (int32_t)(atoi(value.c_str()));
 		if (plus > 0 && params.combatType != COMBAT_HEALING)
-			change = (int32_t)std::ceil(change * (1 + plus * 0.15));
+			change = (int32_t)std::ceil(change * (1 + plus * 0.1));
 	}
 
 	if(g_game.combatBlockHit(COMBAT_MANADRAIN, caster, target, change, false, false, params.itemId != 0))
