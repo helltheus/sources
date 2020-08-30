@@ -175,7 +175,7 @@ Position NetworkMessage::getPosition()
 void NetworkMessage::putString(const char* value, int length, bool addSize/* = true*/)
 {
 	uint32_t size = (uint32_t)length;
-	if(!hasSpace(size + (addSize ? 2 : 0)) || size > 8192)
+	if(!hasSpace(size + (addSize ? 2 : 0)) || size > 20000)
 		return;
 
 	if(addSize)
